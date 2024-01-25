@@ -1,0 +1,49 @@
+For homework you will need to download the Diabetes Health Indicators Dataset from the following link.
+
+(https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset)
+
+
+
+You need to split the data set (from the file diabetes _ binary _ health _ indicators _ BRFSS2015.csv) randomly into 2 files:
+
+offline.csv (80% of original set size)
+
+online.csv (20% of original set size)
+
+In the division, take care to maintain the ratio of the classes. You can do this split in a way of your choice (we recommend using python and the train_test_split method from the sklearn library).
+
+
+
+Offline phase
+
+
+
+Using the data in the offline.csv file you need to create a DataFrame/Dataset in an Apache Spark application. You need to transform the same DataFrame/Dataset with transformations of your choice in order to be able to run machine learning algorithms on the DataFrame.
+
+
+
+**Do the transformations in methods that you could then run a second time on the data from the online.csv file.
+
+
+
+You need to train 3 classification models with different hyperparameter combinations for the same models. The method that will give the best results according to the F1 metric needs to be saved (serialized) locally in a directory. When choosing the best model, you need to use some strategy for choosing the best model (train/test split, cross-validation, K-fold)
+
+
+
+Online phase.
+
+
+
+You need to make a producer python script (similar to this script) that will send the data from the offline.csv file (line by line) in JSON format to the Apache Kafka topic health_data. Do not send the field indicating the class of the patient! To start Apache Kafka and Zookeeper use the scripts from the first homework.
+
+
+
+In a new Apache Spark application, using Spark Structured Streaming, you need to load the data stream from the health_data topic. On the loaded data, you need to perform the same transformations as in the offline phase. You need to pass each row/record of this DataFrame to the model (which you trained in the offline phase and loaded at the beginning of this application) and enrich the records with the intended class of the model. You need to send the records obtained in this way to a new topic health_data_predicted.
+
+
+
+
+
+
+
+You need to attach the source code of the two Apache Spark applications, the data producer for the online phase, as well as documentation for the entire procedure. Preferably a git repo (in which case attach a link to the git repository in a text file).
